@@ -17,18 +17,12 @@ const getMovies = async (api: string) => {
 
 const HomePage = async (): Promise<any> => {
     const [title, setTitle] = useState<string>('');
-    // const [popupVisible, setPopupVisible] = useState<boolean>(false);
-    // const popupRef = useRef(null);
 
     const movies = await getMovies('https://api.themoviedb.org/3/movie/top_rated?api_key=93e71c3dd35ee752b4b43a6ffb32080f&language=en-US&page=1');
 
     const changeTitle = (e: React.ChangeEvent<HTMLInputElement>):void => {
         setTitle(e.target.value);
     }
-
-    // type popupProps = {
-    //     passedId: number
-    // }
 
     return (
         <>
