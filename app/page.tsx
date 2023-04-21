@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from 'next/dynamic'
 import './MoviePopup';
 import { useState, useEffect, useRef } from 'react';
 // import MoviePopup from './MoviePopup';
@@ -56,4 +57,8 @@ async function HomePage() {
     )
 }
 
-export default HomePage;
+// export default HomePage;
+
+export default dynamic(() => Promise.resolve(HomePage), {
+    ssr: false
+  })
