@@ -1,13 +1,13 @@
-// interface Ppp {
-//     passedId: number
-// }
+interface MoviePopupInterface {
+    title: string;
+}
 
-function MoviePopup() {
-
-    // console.log(passedId);
+const MoviePopup: React.FC<MoviePopupInterface> = ({title}) => {
 
     return (
-        <h2 className="movie-popup">This is movie popup</h2>
+        <div className="movie-popup">
+            <h3>{title} popup</h3>
+        </div>
     )
 }
 

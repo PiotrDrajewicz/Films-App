@@ -1,12 +1,11 @@
 "use client";
 
-import dynamic from 'next/dynamic'
-import './MoviePopup';
+import MovieItem from './MovieItem';
 import { useState, useEffect, useRef } from 'react';
-// import MoviePopup from './MoviePopup';
 
 interface MovieData {
     id: number;
+    title: string;
     poster_path: string;
 }
 
@@ -16,21 +15,15 @@ const getMovies = async (api: string) => {
     return data;
 }
 
-async function HomePage() {
+const HomePage = async (): Promise<any> => {
     const [title, setTitle] = useState<string>('');
-    const [popupVisible, setPopupVisible] = useState<boolean>(false);
-    const popupRef = useRef(null);
+    // const [popupVisible, setPopupVisible] = useState<boolean>(false);
+    // const popupRef = useRef(null);
 
     const movies = await getMovies('https://api.themoviedb.org/3/movie/top_rated?api_key=93e71c3dd35ee752b4b43a6ffb32080f&language=en-US&page=1');
 
     const changeTitle = (e: React.ChangeEvent<HTMLInputElement>):void => {
         setTitle(e.target.value);
-    }
-
-    const showPopup = (id: number):void => {
-        // setPopupVisible(id);
-        console.log('kliknąłem ', id);
-        // console.log(popupVisible);
     }
 
     // type popupProps = {
@@ -45,10 +38,11 @@ async function HomePage() {
             </section>
             <section className="movies-container">
                 {movies.results?.map((movie: MovieData) => {
-                    const { id, poster_path} = movie;
+                    const { id, title, poster_path} = movie;
+                    const isOpen = false;
                     return (
                         <>
-                            <img className='movie-poster' src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster" onClick={() => showPopup(id)} ref={popupRef} />
+                            <MovieItem key={id} id={id} title={title} poster_path={poster_path} isOpen={isOpen} />
                         </>
                     )
                 })}
@@ -57,8 +51,4 @@ async function HomePage() {
     )
 }
 
-// export default HomePage;
-
-export default dynamic(() => Promise.resolve(HomePage), {
-    ssr: false
-  })
+export default HomePage;

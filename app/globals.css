@@ -51,7 +51,15 @@ body {
     margin: 1rem 1.25rem 1rem;
 }
 
+.movie-popup-container {
+    position: relative;
+}
+
 .movie-popup {
     width: 200px;
     background-color: white;
+    position: absolute;
+    z-index: 100;
+    top: 200px;
+    left: 200px;
 }
