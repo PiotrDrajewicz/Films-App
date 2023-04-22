@@ -4,16 +4,17 @@ import { faHeart, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 interface MoviePopupInterface {
     title: string;
     poster_path: string;
+    setIsActive: (isOpen: boolean) => void;
 }
 
-const MoviePopup: React.FC<MoviePopupInterface> = ({title, poster_path}) => {
+const MoviePopup: React.FC<MoviePopupInterface> = ({title, poster_path, setIsActive}) => {
 
     return (
         <section className="movie-popup-container">
             <div className="movie-popup">
                 <img className="movie-poster-popup" src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster popup" />
                 <div className="movie-popup-buttons">
-                    <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} style={{color: 'white'}} size='2x' />
+                    <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} onClick={() => setIsActive} style={{color: 'white'}} size='2x' />
                     <FontAwesomeIcon className="popup-icon rate-icon" icon={faStarHalfStroke} style={{color: 'white'}} size='2x' />
                 </div>
             </div>

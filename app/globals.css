@@ -74,8 +74,6 @@ body {
     transform: translate(-50%, -50%);
     overflow: hidden;
     display: flex;
-    /* background-color: rgb(66, 66, 211); */
-    /* border: 1px solid white; */
 }
 
 .movie-poster-popup {
