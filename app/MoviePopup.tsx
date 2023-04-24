@@ -6,12 +6,14 @@ interface MoviePopupInterface {
     title: string;
     poster_path: string;
     setIsActive: (isOpen: boolean) => void;
+    overview: string;
 }
 const isOpen: boolean = false;
 
-const MoviePopup: React.FC<MoviePopupInterface> = ({title, poster_path, setIsActive}) => {
+const MoviePopup: React.FC<MoviePopupInterface> = ({title, poster_path, setIsActive, overview}) => {
     const [isFav, setIsFav] = useState<boolean>(false);
     const [isRateOpen, setIsRateOpen] = useState<boolean>(false);
+    const [ score, setScore ] = useState<number>(1);
 
     const toggleFav = (): void => {
         setIsFav(prev => !prev);
@@ -35,6 +37,9 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({title, poster_path, setIsAct
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>3</p>
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>4</p>
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>5</p>
+                    </div>
+                    <div className="overview-container">
+                        <p className="overview">{overview}</p>
                     </div>
                     <FontAwesomeIcon className='close-icon' icon={faXmark} onClick={() => setIsActive(isOpen)} style={{color: 'white'}} size='2x' />
                 </div>
