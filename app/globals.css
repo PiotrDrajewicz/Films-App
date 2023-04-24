@@ -210,9 +210,15 @@ body {
     margin: 1rem 2rem;
 }
 
+.movie-title {
+    color: white;
+    font-size: 25px;
+}
+
 .overview {
     color: white;
     font-size: 18px;
+    margin-top: 1rem;
 }
 
 @media (min-width: 620px) {

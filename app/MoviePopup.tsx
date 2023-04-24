@@ -39,6 +39,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({title, poster_path, setIsAct
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>5</p>
                     </div>
                     <div className="overview-container">
+                        <h3 className="movie-title">{title}</h3>
                         <p className="overview">{overview}</p>
                     </div>
                     <FontAwesomeIcon className='close-icon' icon={faXmark} onClick={() => setIsActive(isOpen)} style={{color: 'white'}} size='2x' />
