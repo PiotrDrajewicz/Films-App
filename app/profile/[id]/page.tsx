@@ -10,13 +10,19 @@ const getMovieInfo = async (id: string) => {
 }
 
 const MoviePage = async ({ params }: any) => {
-  const movieInfo = await getMovieInfo(params.id);
+    const movieInfo = await getMovieInfo(params.id);
+    const poster_path = movieInfo.poster_path;
 
     return (
-        <div>
-            <h1>{movieInfo.title}</h1>
-            <h3>{movieInfo.movieId}</h3>
-        </div>
+        <section className="single-movie-container">
+            <div className="single-movie">
+                <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie-page-image" className="single-movie-poster single-movie-info" />
+                <div className="single-movie-text">
+                    <h1 className="single-movie-info single-movie-title">{movieInfo.title}</h1>
+                    <h3 className="single-movie-info single-movie-overview">{movieInfo.overview}</h3>
+                </div>
+            </div>
+        </section>
     )
 }
 

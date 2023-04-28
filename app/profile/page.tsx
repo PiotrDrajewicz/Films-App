@@ -13,17 +13,26 @@ const ProfilePage = async () => {
     
     return (
         <>
-            <section className="fav-movies-section">
-                <h1>Favourite movies</h1>
-                <div className="fav-movies-container">
-                    {favMovies?.map((movie) => {
-                        return <MovieProfileItem key={movie.id} {...movie} />
-                    })}
+            <div className="profile-flex-container">
+                <div className="all-movies-container">
+                    <section className="fav-movies-section">
+                        <h1 className="profile-title">Favourite movies</h1>
+                        <div className="fav-movies-container">
+                            {favMovies?.map((movie) => {
+                                return <MovieProfileItem key={movie.id} {...movie} />
+                            })}
+                        </div>
+                    </section>
+                    <section className="rated-movies-section">
+                        <h1 className="profile-title">Rated movies</h1>
+                        <div className="fav-movies-container">
+                            {favMovies?.map((movie) => {
+                                return <MovieProfileItem key={movie.id} {...movie} />
+                            })}
+                        </div>
+                    </section>
                 </div>
-            </section>
-            <section className="rated-movies-section">
-
-            </section>
+            </div>    
         </>
     )
 }

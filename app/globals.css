@@ -210,14 +210,121 @@ body {
     margin: 1rem 2rem;
 }
 
+.overview {
+    color: white;
+    font-size: 18px;
+    margin-top: 1rem;
+}
+
+.profile-flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+.all-movies-container {
+    width: 100%;
+    max-width: 1000px;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    /* background-color: green; */
+}
+
 .movie-title {
     color: white;
     font-size: 25px;
 }
 
-.overview {
+.profile-title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    margin-inline: 2rem;
     color: white;
-    font-size: 18px;
+}
+
+.movie-profile-container {
+    background-color: rgb(104, 31, 238);
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-inline: 2rem;
+    margin-block: 1rem;
+    /* padding: 1rem; */
+    /* box-shadow: 5px 5px 20px -3px rgba(66, 68, 90, 1); */
+    /* transition: background-color .3s; */
+    transition: box-shadow .3s;
+}
+
+.movie-profile-container:hover {
+    /* background-color: rgb(40, 40, 248); */
+    /* box-shadow: 7px 7px 20px 5px rgba(66, 68, 90, 1); */
+    box-shadow: 7px 7px 20px -3px rgba(66, 68, 90, 1);
+}
+
+.movie-arr-item {
+    display: flex;
+    align-items: center;
+}
+
+.movie-info-item {
+    margin: 1rem;
+}
+
+.profile-movie-title {
+    margin-left: 0;
+    color: white;
+}
+
+.profile-poster {
+    width: 64px;
+    height: 95px;
+}
+
+.movie-profile-link {
+    text-decoration: none;
+}
+
+.delete-fav-icon {
+    color: rgb(209, 76, 76);
+    margin-left: auto;
+}
+
+.single-movie-container {
+    display: flex;
+    justify-content: center;
+}
+
+.single-movie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    /* background-color: red; */
+    max-width: 1200px;
+}
+
+.single-movie-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* background-color: red; */
+    color: white;
+    width: 79%;
+}
+
+.single-movie-info {
+    margin-top: 2rem;
+    /* margin-bottom: 2rem; */
+}
+
+.single-movie-poster {
+    height: 55vh;
+}
+
+.single-movie-title {
+width: 297px;   
+}
+
+.single-movie-overview {
     margin-top: 1rem;
 }
 
@@ -248,6 +355,16 @@ body {
 
     .overview-container {
         display: block;
+    }
+
+    .single-movie {
+        align-items: flex-start;
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .single-movie-info {
+        
     }
 
 }
