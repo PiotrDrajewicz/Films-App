@@ -1,20 +1,26 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faStarHalfStroke, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/navigation';
+
 
 interface MoviePopupInterface {
+    movieId: number,
     title: string;
     poster_path: string;
     setIsActive: (isOpen: boolean) => void;
     overview: string;
+    
 }
 const isOpen: boolean = false;
 
-const MoviePopup: React.FC<MoviePopupInterface> = ({title, poster_path, setIsActive, overview}) => {
+const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path, setIsActive, overview}) => {
     const [isFav, setIsFav] = useState<boolean>(false);
     const [isRateOpen, setIsRateOpen] = useState<boolean>(false);
-    const [ score, setScore ] = useState<number>(1);
-
+    const [ rating, setRating ] = useState<number>(0);
+    
+    const router = useRouter();
+    
     const toggleFav = (): void => {
         setIsFav(prev => !prev);
     }
@@ -23,12 +29,33 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({title, poster_path, setIsAct
         setIsRateOpen(prev => !prev);
     }
 
+    const addToFav = async () => {
+        toggleFav();
+        
+        await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                movieId,
+                title,
+                poster_path,
+                overview,
+                isFav,
+                rating
+            }),
+        });
+
+        router.refresh();
+    }
+
     return (
         <section className="movie-popup-container">
             <div className="movie-popup">
                 <img className="movie-poster-popup" src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster popup" />
                 <div className="movie-popup-buttons">
-                    <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} style={ isFav ? {color: 'red'} : {color: 'white'}} onClick={toggleFav} size='2x' />
+                    <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} style={ isFav ? {color: 'red'} : {color: 'white'}} onClick={addToFav} size='2x' />
                     <FontAwesomeIcon className="popup-icon rate-icon" icon={faStarHalfStroke} style={{color: 'white'}} onClick={toggleRate} size='2x' />
                     <div className={`rate-numbers ${ isRateOpen ? 'open' : null}`}>
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>0</p>

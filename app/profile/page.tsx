@@ -23,14 +23,14 @@ const ProfilePage = async () => {
                             })}
                         </div>
                     </section>
-                    <section className="rated-movies-section">
+                    {/* <section className="rated-movies-section">
                         <h1 className="profile-title">Rated movies</h1>
                         <div className="fav-movies-container">
                             {favMovies?.map((movie) => {
                                 return <MovieProfileItem key={movie.id} {...movie} />
                             })}
                         </div>
-                    </section>
+                    </section> */}
                 </div>
             </div>    
         </>
