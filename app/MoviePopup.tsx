@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faStarHalfStroke, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
@@ -14,12 +14,22 @@ interface MoviePopupInterface {
 }
 const isOpen: boolean = false;
 
+const getMovies = async () => {
+    const res = await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records?page=1&perPage=30', 
+    {cache: 'no-store'}
+    );
+    const data = await res.json();
+    return data.items as any[];
+}
+
 const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path, setIsActive, overview}) => {
     const [isFav, setIsFav] = useState<boolean>(false);
     const [isRateOpen, setIsRateOpen] = useState<boolean>(false);
     const [ rating, setRating ] = useState<number>(0);
     
     const router = useRouter();
+    // compareMovies();
+    // console.log('popo1');
     
     const toggleFav = (): void => {
         setIsFav(prev => !prev);
@@ -50,6 +60,21 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
         router.refresh();
     }
 
+    async function compareMovies() {
+        const pBMovies = await getMovies();
+        const favCompResult = pBMovies.some(movie => {
+            return movie.movieId === movieId;
+        })
+
+        if (favCompResult) {
+            setIsFav(true);
+        }
+    }
+
+    useEffect(() => {
+        compareMovies();
+    }, [])
+
     return (
         <section className="movie-popup-container">
             <div className="movie-popup">
@@ -68,6 +93,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
                     <div className="overview-container">
                         <h3 className="movie-title">{title}</h3>
                         <p className="overview">{overview}</p>
+                        {/* <h1 className="overview">{movieId}</h1> */}
                     </div>
                     <FontAwesomeIcon className='close-icon' icon={faXmark} onClick={() => setIsActive(isOpen)} style={{color: 'white'}} size='2x' />
                 </div>

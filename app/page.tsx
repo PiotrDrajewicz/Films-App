@@ -3,7 +3,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import MovieItem from './MovieItem';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 
 interface MovieData {
     id: number;
@@ -21,6 +21,7 @@ const getMovies = async (api: string) => {
 const HomePage = async (): Promise<any> => {
     const [title, setTitle] = useState<string>('');
     const [pageSelectNum, setPageSelectNum] = useState<number>(1);
+    console.log('home page');
     
     const movies = await getMovies('https://api.themoviedb.org/3/movie/top_rated?api_key=93e71c3dd35ee752b4b43a6ffb32080f&language=en-US&page=1');
 
@@ -45,7 +46,7 @@ const HomePage = async (): Promise<any> => {
                         const isOpen = false;
                         return (
                             <>
-                                <MovieItem key={id} id={id} title={title} poster_path={poster_path} isOpen={isOpen} overview={overview} />
+                                <MovieItem key={id} movieId={id} title={title} poster_path={poster_path} isOpen={isOpen} overview={overview} />
                             </>
                         )
                     })}
