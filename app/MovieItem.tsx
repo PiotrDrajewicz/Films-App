@@ -9,10 +9,9 @@ interface MovieItemInterface {
     poster_path: string;
     isOpen: boolean;
     overview: string;
-    isFavProp: boolean;
 }
 
-const MovieItem: React.FC<MovieItemInterface> = ({movieId, title, poster_path, isOpen, overview, isFavProp}) => {
+const MovieItem: React.FC<MovieItemInterface> = ({movieId, title, poster_path, isOpen, overview}) => {
     const [isActive, setIsActive] = useState<boolean>(isOpen);
     // console.log('movie item');
 
@@ -24,7 +23,7 @@ const MovieItem: React.FC<MovieItemInterface> = ({movieId, title, poster_path, i
     return (
         <>
             <img className='movie-poster' src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster" onClick={showPopup} />
-            { isActive ? <MoviePopup title={title} poster_path={poster_path} setIsActive={setIsActive} overview={overview} movieId={movieId} isFavProp={isFavProp} /> : null }
+            { isActive ? <MoviePopup title={title} poster_path={poster_path} setIsActive={setIsActive} overview={overview} movieId={movieId} /> : null }
         </>
     )
 }

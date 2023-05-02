@@ -10,27 +10,42 @@ interface MoviePopupInterface {
     poster_path: string;
     setIsActive: (isOpen: boolean) => void;
     overview: string;
-    isFavProp: boolean;
 }
 const isOpen: boolean = false;
 
-const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path, setIsActive, overview, isFavProp}) => {
+const getFavMovies = async () => {
+    const res = await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records?page=1&perPage=30', 
+    {cache: 'no-store'}
+    );
+    const data = await res.json();
+    return data.items as any[];
+}
+
+const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path, setIsActive, overview}) => {
     const [isFav, setIsFav] = useState<boolean>(false);
     const [isRateOpen, setIsRateOpen] = useState<boolean>(false);
     const [ rating, setRating ] = useState<number>(0);
-    
+    const [pocketBaseId, setPocketBaseId] = useState('');
+
     const router = useRouter();
-    
-    const toggleFav = (): void => {
-        setIsFav(prev => !prev);
-    }
 
     const toggleRate = (): void => {
         setIsRateOpen(prev => !prev);
     }
+    
+    const compareMovies = async () => {
+        const pBMovies = await getFavMovies();
+        const favCompResult = pBMovies.some(movie => movie.movieId === movieId);
+        if (favCompResult) {
+            setIsFav(true);
+            const foundMovie = pBMovies.find(movie => movie.movieId === movieId);
+            setPocketBaseId(foundMovie.id);
+        }
+    }
+    
 
     const addToFav = async () => {
-        toggleFav();
+        setIsFav(true);
         
         await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records', {
             method: 'POST',
@@ -49,17 +64,28 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
 
         router.refresh();
     }
+
+    const deleteFav = async () => {
+        setIsFav(false);
+
+        await fetch(`http://127.0.0.1:8090/api/collections/fav_movies/records/${pocketBaseId}`, {
+            method: 'DELETE',
+        });
+
+        router.refresh();
+    }
     
-    useEffect(() => {
-        if (isFavProp) setIsFav(true);
-    }, [isFav])
+
+    useEffect(()  => {
+        compareMovies();
+    }, [])
 
     return (
         <section className="movie-popup-container">
             <div className="movie-popup">
                 <img className="movie-poster-popup" src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster popup" />
                 <div className="movie-popup-buttons">
-                    <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} style={ isFav ? {color: 'red'} : {color: 'white'}} onClick={addToFav} size='2x' />
+                    <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} style={ isFav ? {color: 'red'} : {color: 'white'}} onClick={ isFav ? deleteFav : addToFav} size='2x' />
                     <FontAwesomeIcon className="popup-icon rate-icon" icon={faStarHalfStroke} style={{color: 'white'}} onClick={toggleRate} size='2x' />
                     <div className={`rate-numbers ${ isRateOpen ? 'open' : null}`}>
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>0</p>
