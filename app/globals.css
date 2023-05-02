@@ -143,6 +143,20 @@ body {
     cursor: pointer;
 }
 
+.star-container {
+    width: 100%;
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.rate-in-star {
+    position: absolute;
+    top: 40px;
+    pointer-events: none;
+}
+
 .close-icon {
     /* margin-top: 14rem; */
     margin-top: auto;
@@ -235,11 +249,20 @@ body {
     font-size: 25px;
 }
 
+.profile-title-container {
+    display: flex;
+}
+
 .profile-title {
     margin-top: 2rem;
     margin-bottom: 1rem;
     margin-inline: 2rem;
     color: white;
+}
+
+.profile-title.active {
+    background-color: red;
+
 }
 
 .movie-profile-container {

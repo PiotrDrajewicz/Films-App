@@ -1,4 +1,7 @@
+'use client'
+
 import MovieProfileItem from "./MovieProfileItem";
+import { useState } from "react";
 
 const getMovies = async () => {
     const res = await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records?page=1&perPage=30', 
@@ -9,14 +12,24 @@ const getMovies = async () => {
 }
 
 const ProfilePage = async () => {
+    const [isFavOpen, setIsFavOpen] = useState<boolean>(true);
+
     const favMovies = await getMovies();
+
+    const toggleFav = () => {
+        setIsFavOpen(prev => !prev);
+    }
+    console.log(isFavOpen)
     
     return (
         <>
             <div className="profile-flex-container">
                 <div className="all-movies-container">
                     <section className="fav-movies-section">
-                        <h1 className="profile-title">Favourite movies</h1>
+                        <div className="profile-title-container">
+                            <h1 onClick={toggleFav} className={`profile-title ${isFavOpen ? 'active' : ''}`} >Favourite movies</h1>
+                            <h1 className={`profile-title ${!isFavOpen ? 'active' : ''}`} >Rated movies</h1>
+                        </div>
                         <div className="fav-movies-container">
                             {favMovies?.map((movie) => {
                                 return <MovieProfileItem key={movie.id} {...movie} />

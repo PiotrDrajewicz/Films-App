@@ -1,7 +1,8 @@
 import { useState, useEffect, memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faStarHalfStroke, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faStarHalfStroke, faXmark, faStar } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
+import RateNumber from './RateNumber';
 
 
 interface MoviePopupInterface {
@@ -12,9 +13,10 @@ interface MoviePopupInterface {
     overview: string;
 }
 const isOpen: boolean = false;
+const rates:number[] = [0, 1, 2, 3, 4, 5];
 
-const getFavMovies = async () => {
-    const res = await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records?page=1&perPage=30', 
+const getMovies = async (collection: string) => {
+    const res = await fetch(`http://127.0.0.1:8090/api/collections/${collection}/records?page=1&perPage=30`, 
     {cache: 'no-store'}
     );
     const data = await res.json();
@@ -25,7 +27,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
     const [isFav, setIsFav] = useState<boolean>(false);
     const [isRateOpen, setIsRateOpen] = useState<boolean>(false);
     const [ rating, setRating ] = useState<number>(0);
-    const [pocketBaseId, setPocketBaseId] = useState('');
+    const [pocketBaseId, setPocketBaseId] = useState<string>('');
 
     const router = useRouter();
 
@@ -33,13 +35,20 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
         setIsRateOpen(prev => !prev);
     }
     
-    const compareMovies = async () => {
-        const pBMovies = await getFavMovies();
-        const favCompResult = pBMovies.some(movie => movie.movieId === movieId);
+    const checkCollection = async () => {
+        const pBFavMovies = await getMovies('fav_movies');
+        const pBRatedMovies = await getMovies('rated_movies');
+        const favCompResult = pBFavMovies.some(movie => movie.movieId === movieId);
+        const ratedCompResult = pBRatedMovies.some(movie => movie.movieId === movieId);
         if (favCompResult) {
             setIsFav(true);
-            const foundMovie = pBMovies.find(movie => movie.movieId === movieId);
+            // const foundMovie = pBFavMovies.find(movie => movie.movieId === movieId);
+            // setPocketBaseId(foundMovie.id);
+        }
+        if (ratedCompResult) {
+            const foundMovie = pBRatedMovies.find(movie => movie.movieId === movieId);
             setPocketBaseId(foundMovie.id);
+            setRating(foundMovie.rating);
         }
     }
     
@@ -77,7 +86,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
     
 
     useEffect(()  => {
-        compareMovies();
+        checkCollection();
     }, [])
 
     return (
@@ -86,14 +95,20 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
                 <img className="movie-poster-popup" src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster popup" />
                 <div className="movie-popup-buttons">
                     <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} style={ isFav ? {color: 'red'} : {color: 'white'}} onClick={ isFav ? deleteFav : addToFav} size='2x' />
-                    <FontAwesomeIcon className="popup-icon rate-icon" icon={faStarHalfStroke} style={{color: 'white'}} onClick={toggleRate} size='2x' />
+                    <div className="star-container">
+                        <FontAwesomeIcon className="popup-icon rate-icon" icon={rating ? faStar : faStarHalfStroke} style={rating ? {color: 'gold'} : {color: 'white'}} onClick={toggleRate} size='2x' />
+                        <p className='rate-in-star'>{rating}</p>
+                    </div>
                     <div className={`rate-numbers ${ isRateOpen ? 'open' : null}`}>
-                        <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>0</p>
+                        {rates.map(rate => {
+                            return <RateNumber isRateOpen={isRateOpen} rating={rate} pocketBaseId={pocketBaseId} movieId={movieId} title={title} poster_path={poster_path} overview={overview} isFav={isFav} setIsRateOpen={setIsRateOpen} setRating={setRating}/>
+                        })}
+                        {/* <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>0</p>
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>1</p>
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>2</p>
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>3</p>
                         <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>4</p>
-                        <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>5</p>
+                        <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>5</p> */}
                     </div>
                     <div className="overview-container">
                         <h3 className="movie-title">{title}</h3>
