@@ -18,11 +18,21 @@ const getMovies = async (api: string) => {
     return data;
 }
 
+const getFavMovies = async () => {
+    const res = await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records?page=1&perPage=30', 
+    {cache: 'no-store'}
+    );
+    const data = await res.json();
+    return data.items as any[];
+}
+
 const HomePage = async (): Promise<any> => {
     const [title, setTitle] = useState<string>('');
     const [pageSelectNum, setPageSelectNum] = useState<number>(1);
-    console.log('home page');
+    // console.log('home page');
     
+    const favMovies = await getFavMovies();
+
     const movies = await getMovies('https://api.themoviedb.org/3/movie/top_rated?api_key=93e71c3dd35ee752b4b43a6ffb32080f&language=en-US&page=1');
 
     const changeTitle = (e: React.ChangeEvent<HTMLInputElement>):void => {
@@ -44,9 +54,10 @@ const HomePage = async (): Promise<any> => {
                     {movies.results?.map((movie: MovieData) => {
                         const { id, title, poster_path, overview} = movie;
                         const isOpen = false;
+                        const isFav = favMovies.some(item => item.movieId === id)
                         return (
                             <>
-                                <MovieItem key={id} movieId={id} title={title} poster_path={poster_path} isOpen={isOpen} overview={overview} />
+                                <MovieItem key={id} movieId={id} title={title} poster_path={poster_path} isOpen={isOpen} overview={overview} isFavProp={isFav} />
                             </>
                         )
                     })}

@@ -10,26 +10,16 @@ interface MoviePopupInterface {
     poster_path: string;
     setIsActive: (isOpen: boolean) => void;
     overview: string;
-    
+    isFavProp: boolean;
 }
 const isOpen: boolean = false;
 
-const getMovies = async () => {
-    const res = await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records?page=1&perPage=30', 
-    {cache: 'no-store'}
-    );
-    const data = await res.json();
-    return data.items as any[];
-}
-
-const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path, setIsActive, overview}) => {
+const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path, setIsActive, overview, isFavProp}) => {
     const [isFav, setIsFav] = useState<boolean>(false);
     const [isRateOpen, setIsRateOpen] = useState<boolean>(false);
     const [ rating, setRating ] = useState<number>(0);
     
     const router = useRouter();
-    // compareMovies();
-    // console.log('popo1');
     
     const toggleFav = (): void => {
         setIsFav(prev => !prev);
@@ -59,21 +49,10 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
 
         router.refresh();
     }
-
-    async function compareMovies() {
-        const pBMovies = await getMovies();
-        const favCompResult = pBMovies.some(movie => {
-            return movie.movieId === movieId;
-        })
-
-        if (favCompResult) {
-            setIsFav(true);
-        }
-    }
-
+    
     useEffect(() => {
-        compareMovies();
-    }, [])
+        if (isFavProp) setIsFav(true);
+    }, [isFav])
 
     return (
         <section className="movie-popup-container">
