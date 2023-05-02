@@ -77,7 +77,7 @@ body {
     margin: .75rem 1rem;
     cursor: pointer;
     box-shadow: 5px 5px 20px -3px rgba(66, 68, 90, 1);
-    transition: box-shadow .3s;
+    transition: box-shadow .2s;
 }
 
 .movie-poster:hover {
@@ -251,7 +251,7 @@ body {
     /* padding: 1rem; */
     /* box-shadow: 5px 5px 20px -3px rgba(66, 68, 90, 1); */
     /* transition: background-color .3s; */
-    transition: box-shadow .3s;
+    transition: box-shadow .2s;
 }
 
 .movie-profile-container:hover {
@@ -281,12 +281,27 @@ body {
 
 .movie-profile-link {
     text-decoration: none;
+    /* background-color: pink; */
+    width: 90%;
+    border-radius: 10px;
+}
+
+.link-container {
+    display: flex;
+    align-items: center;
 }
 
 .delete-fav-icon {
     color: rgb(209, 76, 76);
     margin-left: auto;
+    cursor: pointer;
+    /* position: relative; */
+    /* z-index: 200; */
 }
+
+/* .delete-fav-icon:hover {
+    color: green;
+} */
 
 .single-movie-container {
     display: flex;
