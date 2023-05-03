@@ -258,10 +258,12 @@ body {
     margin-bottom: 1rem;
     margin-inline: 2rem;
     color: white;
+    /* background-color: green; */
+    cursor: pointer;
 }
 
 .profile-title.active {
-    background-color: red;
+    /* background-color: red; */
 
 }
 
