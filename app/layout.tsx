@@ -2,6 +2,7 @@ import Link from "next/link";
 import './globals.css';
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import NavList from "./NavList";
 
 config.autoAddCss = false;
 
@@ -19,9 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <main>
-          <nav className="nav-list">
-            <Link href="/" className="nav-item">Movies</Link>
-            <Link href="/profile" className="nav-item">Profile</Link>
+          <nav>
+            <NavList />
           </nav>
         {children}
         </main>
