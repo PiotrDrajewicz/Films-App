@@ -17,12 +17,6 @@ const ProfilePage = async () => {
     
     const favMovies = await getMovies();
     console.log('re-render');
-    
-    const toggleFav = () => {
-        // setIsFavOpen(prev => !prev);
-        // console.log('triggered');
-        console.log(titleRef.current);
-    }
 
     return (
         <>
@@ -38,14 +32,6 @@ const ProfilePage = async () => {
                             })}
                         </div>
                     </section>
-                    {/* <section className="rated-movies-section">
-                        <h1 className="profile-title">Rated movies</h1>
-                        <div className="fav-movies-container">
-                            {favMovies?.map((movie) => {
-                                return <MovieProfileItem key={movie.id} {...movie} />
-                            })}
-                        </div>
-                    </section> */}
                 </div>
             </div>    
         </>

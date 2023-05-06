@@ -1,6 +1,6 @@
 
 const getMovieInfo = async (id: string) => {
-    const res = await fetch(`http://127.0.0.1:8090/api/collections/fav_movies/records/${id}`,
+    const res = await fetch(`http://127.0.0.1:8090/api/collections/rated_movies/records/${id}`,
     {
         next: {revalidate: 10},
     }
@@ -19,7 +19,7 @@ const MoviePage = async ({ params }: any) => {
                 <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie-page-image" className="single-movie-poster single-movie-info" />
                 <div className="single-movie-text">
                     <h1 className="single-movie-info single-movie-title">{movieInfo.title}</h1>
-                    <h4 className="single-movie-info single-movie-overview">{movieInfo.overview}</h4>
+                    <h3 className="single-movie-info single-movie-overview">{movieInfo.overview}</h3>
                 </div>
             </div>
         </section>

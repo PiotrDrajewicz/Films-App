@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Yantramanav&display=swap");
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -12,20 +14,24 @@ body {
     /* height: 100%;
     margin: 0; */
     height: 100vh;
-    background: linear-gradient(140deg, rgb(127, 127, 252), rgb(55, 55, 187));
+    background: linear-gradient(160deg, rgb(146, 146, 255), rgb(31, 31, 150));
+    /* background: white; */
     background-repeat: no-repeat;
     background-attachment: fixed;
+    /* font-family: 'Arimo', sans-serif; */
+    font-family: 'Crimson Text', serif;
 }
 
 .nav-list {
     display: flex;
     justify-content: flex-end;
-    background-color: rgb(66, 66, 211);
+    /* background-color: rgb(66, 66, 211); */
+    background-color: rgb(70, 70, 211);
     position: relative;
 }
 
 .sub-links {
-    background-color: rgb(66, 66, 211);
+    background-color: rgb(70, 70, 211);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,6 +40,8 @@ body {
     top: 55px;
     opacity: 0;
     pointer-events: none;
+    border-bottom-left-radius: 10px;
+    transition: opacity .1s;
 }
 
 .sub-links.open {
@@ -48,6 +56,7 @@ body {
     font-size: 1.25rem;
     text-decoration: none;
     /* width: 100%; */
+    transition: background-color .1s;
 }
 
 .sub-nav-item {
@@ -57,6 +66,12 @@ body {
     text-decoration: none;
     width: 100%;
     text-align: center;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+#rated-item {
+    border-bottom-left-radius: 10px;
 }
 
 .nav-item:hover {
@@ -81,7 +96,7 @@ body {
     width: 75%;
     max-width: 400px;
     height: 2.5rem;
-    border: 2px solid rgb(66, 66, 211);
+    border: 2px solid rgb(70, 70, 211);
     border-radius: 5px;
 }
 
@@ -108,12 +123,12 @@ body {
     height: 185px;
     margin: .75rem 1rem;
     cursor: pointer;
-    box-shadow: 5px 5px 20px -3px rgba(66, 68, 90, 1);
+    box-shadow: 6px 6px 15px -4px rgba(66, 68, 90, 1);
     transition: box-shadow .2s;
 }
 
 .movie-poster:hover {
-    box-shadow: 7px 7px 20px 5px rgba(66, 68, 90, 1);
+    box-shadow: 7px 7px 20px 4px rgba(66, 68, 90, 1);
 }
 
 .page-select-container {
@@ -131,10 +146,11 @@ body {
 
 .arrow-icon {
     cursor: pointer;
+    transition: filter .1s;
 }
 
-.movie-popup-container {
-    /* position: relative; */
+.arrow-icon:hover {
+    filter: brightness(.9);
 }
 
 .movie-popup {
@@ -149,6 +165,7 @@ body {
     transform: translate(-50%, -50%);
     overflow: hidden;
     display: flex;
+    max-width: 1200px;
 }
 
 .movie-poster-popup {
@@ -157,7 +174,8 @@ body {
 }
 
 .movie-popup-buttons {
-    background-color: rgb(127, 127, 252);
+    /* background-color: rgb(127, 127, 252); */
+    background-color: rgb(70, 70, 211);
     width: 100%;
     height: 100%;
     /* margin-left: auto; */
@@ -173,6 +191,25 @@ body {
 .popup-icon {
     margin-top: 2rem;
     cursor: pointer;
+    /* background-color: green ; */
+}
+
+.add-fav-icon {
+    width: 40px;
+    align-self: center;
+    transition: transform .1s, filter .1s;
+}
+
+.add-fav-icon:hover {
+    filter: brightness(.9);
+}
+
+.add-fav-icon:active {
+    transform: scale(1.2);
+}
+
+.rate-icon:hover {
+    filter: brightness(.9);
 }
 
 .star-container {
@@ -185,7 +222,7 @@ body {
 
 .rate-in-star {
     position: absolute;
-    top: 40px;
+    top: 41px;
     pointer-events: none;
 }
 
@@ -194,6 +231,14 @@ body {
     margin-top: auto;
     margin-bottom: 1.5rem;
     cursor: pointer;
+    transition: transform .2s;
+    /* background-color: red; */
+    width: 30px;
+    align-self: center;
+}
+
+.close-icon:hover {
+    transform: rotate(90deg);
 }
 
 .rate-numbers {
@@ -232,7 +277,47 @@ body {
 
 .rate-number:hover {
     /* background-color: red; */
-    color: rgb(127, 127, 252);
+    color: rgb(70, 70, 211);
+}
+
+/* .rate-numbers-container {
+    position: relative;
+} */
+
+.movie-profile-link {
+    /* background-color: orange; */
+}
+
+.movie-rated-container {
+    /* position: relative; */
+    /* background-color: red; */
+}
+
+.profile-rated-numbers {
+    /* position: absolute; */
+    height: 28px;
+    width: 0%;
+    background-color: white;
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* left: 635px; */
+    transition: width .3s;
+    /* top: 10px; */
+    /* align-self: center; */
+    text-align: left;
+}
+
+.profile-rated-numbers.open {
+    width: 25%;
+    /* width: 400px; */
+}
+
+.star-profile-container {
+    /* background-color: green; */
+    margin-right: 3.5rem;
+    margin-left: .5rem;
 }
 
 /* .rate-number { */
@@ -290,8 +375,6 @@ body {
     margin-bottom: 1rem;
     margin-inline: 2rem;
     color: white;
-    /* background-color: green; */
-    cursor: pointer;
 }
 
 .profile-title.active {
@@ -349,16 +432,32 @@ body {
 }
 
 .delete-fav-icon {
-    color: rgb(209, 76, 76);
+    color: rgb(250, 45, 45);
     margin-left: auto;
+    margin-right: 3.5rem;
     cursor: pointer;
-    /* position: relative; */
-    /* z-index: 200; */
+    transition: filter .1s;
 }
 
-/* .delete-fav-icon:hover {
-    color: green;
-} */
+.delete-fav-icon:hover {
+    filter: brightness(.9);
+}
+
+.star-profile-container {
+    position: relative;
+}
+
+.star-profile {
+    margin-right: 0rem;
+}
+
+.profile-rating {
+    position: absolute;
+    right: 14px;
+    bottom: 21px;
+    cursor: pointer;
+    pointer-events: none;
+}
 
 .single-movie-container {
     display: flex;
@@ -372,6 +471,7 @@ body {
     width: 100%;
     /* background-color: red; */
     max-width: 1200px;
+    margin-top: 4rem;
 }
 
 .single-movie-text {
@@ -398,6 +498,19 @@ width: 297px;
 
 .single-movie-overview {
     margin-top: 1rem;
+    font-size: 17px;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (min-width: 620px) {
@@ -429,14 +542,15 @@ width: 297px;
         display: block;
     }
 
+    .overview {
+        font-size: 15px;
+    }
+
     .single-movie {
         align-items: flex-start;
         margin-left: 2rem;
         margin-right: 2rem;
-    }
-
-    .single-movie-info {
-        
+        color: rgb(250, 45, 45);
     }
 
 }
@@ -445,5 +559,9 @@ width: 297px;
     .movie-poster {
         width: 224px;
         height: 315px;
+    }
+
+    .overview {
+        font-size: 17px;
     }
 }

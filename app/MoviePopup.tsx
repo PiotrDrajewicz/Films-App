@@ -94,7 +94,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
             <div className="movie-popup">
                 <img className="movie-poster-popup" src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster popup" />
                 <div className="movie-popup-buttons">
-                    <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} style={ isFav ? {color: 'red'} : {color: 'white'}} onClick={ isFav ? deleteFav : addToFav} size='2x' />
+                    <FontAwesomeIcon className="popup-icon add-fav-icon" icon={faHeart} style={ isFav ? {color: 'rgb(250, 45, 45)'} : {color: 'white'}} onClick={ isFav ? deleteFav : addToFav} size='2x' />
                     <div className="star-container">
                         <FontAwesomeIcon className="popup-icon rate-icon" icon={rating ? faStar : faStarHalfStroke} style={rating ? {color: 'gold'} : {color: 'white'}} onClick={toggleRate} size='2x' />
                         <p className='rate-in-star'>{rating}</p>
@@ -103,17 +103,10 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
                         {rates.map(rate => {
                             return <RateNumber isRateOpen={isRateOpen} rating={rate} pocketBaseId={pocketBaseId} movieId={movieId} title={title} poster_path={poster_path} overview={overview} isFav={isFav} setIsRateOpen={setIsRateOpen} setRating={setRating}/>
                         })}
-                        {/* <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>0</p>
-                        <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>1</p>
-                        <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>2</p>
-                        <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>3</p>
-                        <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>4</p>
-                        <p className={`rate-number ${ isRateOpen ? 'visible' : null}`}>5</p> */}
                     </div>
                     <div className="overview-container">
                         <h3 className="movie-title">{title}</h3>
                         <p className="overview">{overview}</p>
-                        {/* <h1 className="overview">{movieId}</h1> */}
                     </div>
                     <FontAwesomeIcon className='close-icon' icon={faXmark} onClick={() => setIsActive(isOpen)} style={{color: 'white'}} size='2x' />
                 </div>

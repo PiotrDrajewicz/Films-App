@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-const NavList = () => {
+const NavList: React.FC = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
     return (
@@ -12,7 +12,7 @@ const NavList = () => {
             <Link href="/profile" className="nav-item" onMouseOver={() => setIsDropdownOpen(true)} onMouseOut={() => setIsDropdownOpen(false)}>Library</Link>
             <div className={`sub-links ${isDropdownOpen && 'open'}`}>
               <Link href="/profile" className="nav-item sub-nav-item" onMouseOver={() => setIsDropdownOpen(true)} onMouseOut={() => setIsDropdownOpen(false)}>Favourite</Link>
-              <Link href="/profile" className="nav-item sub-nav-item" onMouseOver={() => setIsDropdownOpen(true)} onMouseOut={() => setIsDropdownOpen(false)}>Rated</Link >
+              <Link href="/rated" className="nav-item sub-nav-item" id="rated-item" onMouseOver={() => setIsDropdownOpen(true)} onMouseOut={() => setIsDropdownOpen(false)}>Rated</Link >
             </div>
         </div>
     )

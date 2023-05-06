@@ -8,7 +8,7 @@ interface RateNumberInterface {
     title: string;
     poster_path: string;
     overview: string;
-    isFav: boolean;
+    isFav?: boolean;
     setIsRateOpen: (isOpen:boolean) => void;
     setRating: (rate: number) => void;
 }
@@ -30,7 +30,7 @@ const RateNumber: React.FC<RateNumberInterface> = ({isRateOpen, rating, pocketBa
         setRating(rating);
         const ratedMovies = await getRatedMovies();
         const isInDatabase = ratedMovies.some(movie => movie.movieId === movieId)
-        if (isInDatabase) {
+        if (isInDatabase && rating) {
             await fetch(`http://127.0.0.1:8090/api/collections/rated_movies/records/${pocketBaseId}`, {
                 method: 'PATCH',
                 headers: {
@@ -42,7 +42,15 @@ const RateNumber: React.FC<RateNumberInterface> = ({isRateOpen, rating, pocketBa
             });
 
             router.refresh();
-        } else {
+        }
+        if (isInDatabase && !rating) {
+            await fetch(`http://127.0.0.1:8090/api/collections/rated_movies/records/${pocketBaseId}`, {
+                method: 'DELETE',
+            });
+    
+            router.refresh();
+        }
+        if (!isInDatabase && rating) {
             console.log('nie ma');
             await fetch('http://127.0.0.1:8090/api/collections/rated_movies/records', {
                 method: 'POST',

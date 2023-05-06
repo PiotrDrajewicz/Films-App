@@ -1,4 +1,3 @@
-import Link from "next/link";
 import './globals.css';
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
