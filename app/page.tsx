@@ -32,8 +32,7 @@ const HomePage = async (): Promise<any> => {
     // console.log('home page');
     
     // const favMovies = await getFavMovies();
-
-    const movies = await getMovies('https://api.themoviedb.org/3/movie/top_rated?api_key=93e71c3dd35ee752b4b43a6ffb32080f&language=en-US&page=1');
+    const movies = await getMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=1`);
 
     const changeTitle = (e: React.ChangeEvent<HTMLInputElement>):void => {
         setTitle(e.target.value);
