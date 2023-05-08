@@ -127,6 +127,10 @@ body {
     transition: box-shadow .2s;
 }
 
+.movie-poster.ignore {
+    pointer-events: none;
+}
+
 .movie-poster:hover {
     box-shadow: 7px 7px 20px 4px rgba(66, 68, 90, 1);
 }
