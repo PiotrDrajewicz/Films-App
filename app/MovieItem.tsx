@@ -23,7 +23,7 @@ const MovieItem: React.FC<MovieItemInterface> = ({movieId, title, poster_path, i
     
     return (
         <>
-            <img className='movie-poster' data-id={movieId} src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster" onClick={showPopup} />
+            <img className='movie-poster' src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster" onClick={showPopup} />
             { isActive ? <MoviePopup title={title} poster_path={poster_path} setIsActive={setIsActive} overview={overview} movieId={movieId} /> : null }
         </>
     )

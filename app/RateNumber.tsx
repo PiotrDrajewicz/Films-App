@@ -51,7 +51,7 @@ const RateNumber: React.FC<RateNumberInterface> = ({isRateOpen, rating, pocketBa
             router.refresh();
         }
         if (!isInDatabase && rating) {
-            console.log('nie ma');
+            // console.log('nie ma');
             await fetch('http://127.0.0.1:8090/api/collections/rated_movies/records', {
                 method: 'POST',
                 headers: {

@@ -146,15 +146,20 @@ body {
     font-size: 24px;
     color: white;
     margin-inline: .75rem;
+    user-select: none;
 }
 
 .arrow-icon {
     cursor: pointer;
-    transition: filter .1s;
+    transition: filter .1s, transform .1s;
 }
 
 .arrow-icon:hover {
     filter: brightness(.9);
+}
+
+.arrow-icon:active {
+    transform: scale(1.2);
 }
 
 .movie-popup {

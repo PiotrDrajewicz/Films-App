@@ -28,6 +28,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
     const [isRateOpen, setIsRateOpen] = useState<boolean>(false);
     const [ rating, setRating ] = useState<number>(0);
     const [pocketBaseId, setPocketBaseId] = useState<string>('');
+    // const [pocketFav, setPocketFav] = useState(getMovies('fav_movies'));
     const popupRef = useRef<HTMLElement>(null);
 
     const router = useRouter();
@@ -44,8 +45,8 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
         const ratedCompResult = pBRatedMovies.some(movie => movie.movieId === movieId);
         if (favCompResult) {
             setIsFav(true);
-            // const foundMovie = pBFavMovies.find(movie => movie.movieId === movieId);
-            // setPocketBaseId(foundMovie.id);
+            const foundMovie = pBFavMovies.find(movie => movie.movieId === movieId);
+            setPocketBaseId(foundMovie.id);
         }
         if (ratedCompResult) {
             const foundMovie = pBRatedMovies.find(movie => movie.movieId === movieId);
@@ -58,6 +59,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
     const addToFav = async () => {
         setIsFav(true);
         let isFav = true;
+        // console.log('add triggered');
         
         await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records', {
             method: 'POST',
@@ -79,6 +81,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
 
     const deleteFav = async () => {
         setIsFav(false);
+        // console.log('delete triggered', pocketBaseId);
 
         await fetch(`http://127.0.0.1:8090/api/collections/fav_movies/records/${pocketBaseId}`, {
             method: 'DELETE',
@@ -104,13 +107,17 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
     
 
     useEffect(()  => {
-        checkCollection();
+        // checkCollection();
         checkClick();
     }, [])
 
+    useEffect(() => {
+        checkCollection();
+    }, [isFav])
+
     return (
         <>
-            <section ref={popupRef} className="movie-popup-container" data-id={movieId}>
+            <section ref={popupRef} className="movie-popup-container" >
                 <div className="movie-popup">
                     <img className="movie-poster-popup" src={`https://image.tmdb.org/t/p/original${poster_path}`} alt="movie poster popup" />
                     <div className="movie-popup-buttons">
@@ -121,7 +128,7 @@ const MoviePopup: React.FC<MoviePopupInterface> = ({movieId, title, poster_path,
                         </div>
                         <div className={`rate-numbers ${ isRateOpen ? 'open' : null}`}>
                             {rates.map(rate => {
-                                return <RateNumber isRateOpen={isRateOpen} rating={rate} pocketBaseId={pocketBaseId} movieId={movieId} title={title} poster_path={poster_path} overview={overview} isFav={isFav} setIsRateOpen={setIsRateOpen} setRating={setRating}/>
+                                return <RateNumber key={rate} isRateOpen={isRateOpen} rating={rate} pocketBaseId={pocketBaseId} movieId={movieId} title={title} poster_path={poster_path} overview={overview} isFav={isFav} setIsRateOpen={setIsRateOpen} setRating={setRating}/>
                             })}
                         </div>
                         <div className="overview-container">

@@ -12,28 +12,18 @@ interface MovieData {
     overview: string;
 }
 
-const getMovies = async (api: string) => {
-    const res = await fetch(api);
-    const data = await res.json();
-    return data;
-}
 
-// const getFavMovies = async () => {
-//     const res = await fetch('http://127.0.0.1:8090/api/collections/fav_movies/records?page=1&perPage=30', 
-//     {cache: 'no-store'}
-//     );
-//     const data = await res.json();
-//     return data.items as any[];
-// }
-
-const HomePage = async (): Promise<any> => {
-    const [title, setTitle] = useState<string>('');
+const HomePage: React.FC = () => {
+    const [movies, setMovies] = useState<any>({});
+    const [title, setTitle] = useState<string | undefined>('');
     const [pageSelectNum, setPageSelectNum] = useState<number>(1);
-    // console.log('home page');
-    
-    // const favMovies = await getFavMovies();
 
-    const movies = await getMovies('https://api.themoviedb.org/3/movie/top_rated?api_key=93e71c3dd35ee752b4b43a6ffb32080f&language=en-US&page=1');
+    const getMovies = async (api: string) => {
+        const res = await fetch(api);
+        const data = await res.json();
+        // return data;
+        setMovies(data);
+    }
 
     const changeTitle = (e: React.ChangeEvent<HTMLInputElement>):void => {
         setTitle(e.target.value);
@@ -42,6 +32,19 @@ const HomePage = async (): Promise<any> => {
     const incrementPage = ():void => {
         setPageSelectNum(prev => prev + 1);
     }
+
+    const decrementPage = ():void => {
+        if (pageSelectNum > 1) setPageSelectNum(prev => prev - 1);
+    }
+
+    useEffect(() => {
+        if (title) {
+            getMovies(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&query=${title}&page=${pageSelectNum}&include_adult=false`);
+        } else {
+            getMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=${pageSelectNum}`);
+        }
+    }, [pageSelectNum, title])
+
 
     return (
         <>
@@ -54,12 +57,6 @@ const HomePage = async (): Promise<any> => {
                     {movies.results?.map((movie: MovieData) => {
                         const { id, title, poster_path, overview} = movie;
                         const isOpen = false;
-                        // const isFav = favMovies.some(item => item.movieId === id);
-                        // const pocketBaseId = favMovies.find(item => item.movieId === id)?.id;
-                        // if (isFav) {
-                        //     const foundMovie = favMovies.find(item => item.movieId === id);
-                        //     const pBId = foundMovie.id;
-                        // }
                         return (
                             <>
                                 <MovieItem key={id} movieId={id} title={title} poster_path={poster_path} isOpen={isOpen} overview={overview} />
@@ -68,7 +65,7 @@ const HomePage = async (): Promise<any> => {
                     })}
                 </section>
                 <section className="page-select-container">
-                    <FontAwesomeIcon className="arrow-icon" icon={faAngleLeft} style={{color: 'white'}} size='2x' />
+                    <FontAwesomeIcon className="arrow-icon" icon={faAngleLeft} style={{color: 'white'}} size='2x' onClick={decrementPage}/>
                     <p className="page-select-num">{pageSelectNum}</p>
                     <FontAwesomeIcon className="arrow-icon" icon={faAngleRight} style={{color: 'white'}} size='2x'  onClick={incrementPage}/>
                 </section>

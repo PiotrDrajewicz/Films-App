@@ -35,7 +35,7 @@ const MovieRatedItem: React.FC<MovieProfileItem> = ({id, movieId, title, poster_
                 </Link>
                 <div className={`profile-rated-numbers ${ isRateOpen ? 'open' : null}`}>
                     {rates.map(rate => {
-                        return <RateNumber isRateOpen={isRateOpen} rating={rate} pocketBaseId={id} movieId={movieId} title={title} poster_path={poster_path} overview={overview} setIsRateOpen={setIsRateOpen} setRating={setNewRating} />
+                        return <RateNumber key={rate} isRateOpen={isRateOpen} rating={rate} pocketBaseId={id} movieId={movieId} title={title} poster_path={poster_path} overview={overview} setIsRateOpen={setIsRateOpen} setRating={setNewRating} />
                     })}
                 </div>
                 <div className="star-profile-container">

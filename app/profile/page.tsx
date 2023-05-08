@@ -12,11 +12,7 @@ const getMovies = async () => {
 }
 
 const ProfilePage = async () => {
-    // const [isFavOpen, setIsFavOpen] = useState<boolean>(true);
-    const titleRef = useRef(null);
-    
     const favMovies = await getMovies();
-    console.log('re-render');
 
     return (
         <>
