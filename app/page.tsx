@@ -17,6 +17,7 @@ const HomePage: React.FC = () => {
     const [movies, setMovies] = useState<any>({});
     const [title, setTitle] = useState<string | undefined>('');
     const [pageSelectNum, setPageSelectNum] = useState<number>(1);
+<<<<<<< HEAD
 
     const getMovies = async (api: string) => {
         const res = await fetch(api);
@@ -24,6 +25,12 @@ const HomePage: React.FC = () => {
         // return data;
         setMovies(data);
     }
+=======
+    // console.log('home page');
+    
+    // const favMovies = await getFavMovies();
+    const movies = await getMovies(`https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=1`);
+>>>>>>> b16f8a2fb773201496d2bcd2dab83050ee355be5
 
     const changeTitle = (e: React.ChangeEvent<HTMLInputElement>):void => {
         setTitle(e.target.value);
