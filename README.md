@@ -4,6 +4,7 @@ Web application in which you can build your personal movie library and rate each
 This is my personal project. In this app, you can search for any movie, by typing its title or by browsing given films. The main purpose of the website is to build your own library, by adding the movie to the favourites and to rate them in the scale of 1-5. Provided data is being saved in the database - created by PocketBase service. You can also read the most important information about the selected movie.
 ## Technologies
 * TypeScript
+* JavaScript
 * React.js
 * Next.js
 * HTML
